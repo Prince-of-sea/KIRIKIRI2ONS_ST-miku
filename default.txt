@@ -1,0 +1,229 @@
+;mode800
+*define
+
+caption "–¢—ˆ‚ÌƒLƒ~‚ÆA‚·‚×‚Ä‚Ì‰Ì‚É\ for ONScripter"
+
+rmenu "ƒZ[ƒu",save,"ƒ[ƒh",load,"ƒŠƒZƒbƒg",reset
+transmode alpha
+globalon
+rubyon
+saveon
+nsa
+
+defsub playfadein
+defsub stopfadeout
+defsub layermove
+defsub tati
+defsub cltati
+defsub bgdef
+defsub msg
+defsub msgNamePos
+
+effect 2,10,100
+effect 3,10,1000
+;<<-EFFECT->>
+
+game
+
+*playfadein
+	;ttps://chappy.exblog.jp/5872275/
+	getparam $5,%5
+	bgmfadein %5
+	bgm $5
+	bgmfadein 0
+return
+
+
+*stopfadeout
+	;ttps://chappy.exblog.jp/5872275/
+	getparam %5
+	bgmfadeout %5
+	stop
+	bgmfadeout 0
+return
+
+
+*layermove
+	;ƒXƒNƒ[ƒ‹‚â‚ë‚¤‚Æ‚µ‚½‚¯‚Ç‹Zp—Í‚ª‚È‚©‚Á‚½
+	saveoff
+	getparam %10,%11,%12,%13,%14
+
+	amsp %10,%12,%13
+	print %11
+
+	if %14==0 vsp %10,0:print 2
+	saveon
+return
+
+
+;—§‚¿ŠG•\¦
+*tati
+	;lsp2‚ÌƒŒƒCƒ„[•\¦‡w’è‚ªONS‚Å‚¤‚Ü‚­‚¢‚©‚È‚¢‚½‚ß
+	;d•û‚È‚­‘Š‘Îw’è‚ğlsp‚ÅÄŒ»‚·‚éŠ´‚¶
+	;’N‚©‚à‚Á‚Æ—Ç‚¢‚â‚è•û’m‚Á‚Ä‚½‚ç‹³‚¦‚Ä...
+
+	getparam $2,$3,%6
+	vsp 1,0:vsp 0,0
+
+	lsph %6,$2,0,0		;‰¼ŒÄ‚Ño‚µ
+	getspsize %6,%3,%4	;ƒTƒCƒYæ“¾
+
+	;‘Š‘ÎˆÊ’uŒvZ
+	mov %3,400-(%3/2)
+	mov %4,300-(%4/2)
+
+	amsp %6,%3,%4	;–{—ˆ‚ÌˆÊ’u‚ÉˆÚ“®
+	vsp %6,1			;•\¦
+return
+
+
+;”wŒi•\¦
+*bgdef
+	getparam $4,%7
+
+	vsp 0,0:vsp 1,0:vsp 2,0:vsp 6,0
+	csp 5:csp 4:csp 3
+	print 0
+
+	bg $4,%7
+return
+
+
+;—§‚¿ŠGíœ
+*cltati
+	csp 6
+	print 2
+
+	csp 5:csp 4:csp 3
+	monocro off
+	print 0
+return
+
+
+;ƒƒbƒZ[ƒW•\¦
+*msg
+	getparam $0,%0
+
+	vsp 2,1:vsp 6,1
+	print 0
+
+	if $1!="" vsp 1,1:msgNamePos:strsp 0,$1,%2,417,7,1,26,26,2,3,0,1
+	if $1=="" vsp 1,0:vsp 0,0
+
+	if %0!=3 setwindow3 15,460,24,3,26,26,2,3,30,0,1,"others\frame01.png",0,450	;’Êí•\¦
+	if %0==3 setwindow3 15,460,24,3,26,26,2,3,60,0,1,"others\frame01.png",0,450	;’á‘¬•\¦
+
+	if %0==1 $0@
+	if %0==2 $0\
+	if %0==3 $0\
+
+	mov $1,""
+return
+
+
+;ƒLƒƒƒ‰–¼’†‰›•\¦—pÀ•Wæ“¾
+*msgNamePos
+	;•¶š26px+•2px=28px
+	;lenæ“¾”/2=•¶š”(ˆê•¶š‚Å2”»’è‚Á‚Û‚¢)
+	;•¶š”x28px-2px=–¼‘O‘S‘Ì‚Ì•¶šƒTƒCƒY
+
+	;frame02‚Ì‰¡•‚Í153px
+	;(frame02‚Ì‰¡•-–¼‘O‘S‘Ì‚Ì•¶šƒTƒCƒY)/2=XÀ•W
+
+	len %1,$1
+	mov %2,(153-(%1/2)*(26+2)-2)/2
+return
+
+
+*start
+
+abssetcursor 1,":a/8,210,0;system\linebreak_a.png",740,520
+lsph 1,"others\frame02.png",0,417
+lsph 2,"others\frame03.png",530,570
+
+
+;ƒNƒŠƒAó‘ÔƒeƒXƒg
+;mov %200,1
+
+bg black,0
+bg "others\logo.jpg",3
+wait 1000
+*title
+	bg black,3
+	bgm "bgm\bgm_op.ogg"
+	bg "others\title.jpg",3
+	
+	lsp 10,":a/3,0,3;others\bt_start.png",26,29
+	lsp 11,":a/3,0,3;others\bt_load.png" ,26,70
+	if %200==1 lsp 12,":a/3,0,3;others\bt_graph.png",26,112
+	lsp 13,":a/3,0,3;others\bt_end.png"  ,26,196
+
+	print 0
+
+*title_loop
+	bclear
+	
+	spbtn 10,10
+	spbtn 11,11
+	if %200==1 spbtn 12,12
+	spbtn 13,13
+
+	btnwait %9
+	print 0
+
+	if %9==10 gosub *titlebtn:goto *sn_01_01_ks
+	if %9==11 systemcall load:goto *title_loop
+	if %200==1 if %9==12 gosub *titlebtn:goto *grpmode
+	if %9==13 gosub *titlebtn:bg black,3:end
+	
+goto *title_loop
+
+
+*titlebtn
+	;<<-SE-DWAVE->>
+	stopfadeout 1000
+	csp 10:csp 11:csp 12:csp 13
+return
+
+
+*grpmode
+bg "others\cg_mode.jpg",3
+select "‚b‚f‚O‚P",*CG01,
+       "‚b‚f‚O‚Q",*CG02,
+       "‚b‚f‚O‚R",*CG03,
+       "‚b‚f‚O‚S",*CG04,
+       "‚b‚f‚O‚T",*CG05,
+       "‚b‚f‚O‚U",*CG06,
+       "‚b‚f‚O‚V",*CG07,
+       "‚b‚f‚O‚W",*CG08,
+       "‚b‚f‚O‚X",*CG10,
+       "‚b‚f‚P‚O",*CG12,
+       "‚d‚w‚h‚s",*title
+
+*CG01
+	mov $6,"01":goto *grpview
+*CG02
+	mov $6,"02":goto *grpview
+*CG03
+	mov $6,"03":goto *grpview
+*CG04
+	mov $6,"04":goto *grpview
+*CG05
+	mov $6,"05":goto *grpview
+*CG06
+	mov $6,"06":goto *grpview
+*CG07
+	mov $6,"07":goto *grpview
+*CG08
+	mov $6,"08":goto *grpview
+*CG10
+	mov $6,"10":goto *grpview
+*CG12
+	mov $6,"12":goto *grpview
+
+*grpview
+;<<-GRAPHIC_VIEW->>
+goto *grpmode
+
+
+;----------‚±‚±‚Ü‚Ådefault.txt----------
