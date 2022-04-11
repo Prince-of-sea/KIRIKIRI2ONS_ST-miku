@@ -29,4 +29,5 @@
  - 本ツールの使用において生じた問題や不利益などについて、作者は一切の責任を負いません
 
 ## その他
-[PSP向け自動変換ツール作ってます](https://github.com/Prince-of-sea/ONScripter_Multi_Converter) もしPSPで遊ぶ場合はぜひご利用ください
+本作の変換を追加でサポートする[PSP向け自動変換ツール作ってます](https://github.com/Prince-of-sea/ONScripter_Multi_Converter)<br>
+もしPSPで遊ぶ場合はぜひご利用ください(v1.2.5以上推奨、v1.2.4以下動作不可)
